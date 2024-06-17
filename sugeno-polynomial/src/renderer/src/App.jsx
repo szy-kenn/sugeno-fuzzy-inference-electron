@@ -9,13 +9,16 @@ const App = () => {
   const [isShown, setIsShown] = useState(false);
   const [userInput, setUserInput] = useState(0);
 
+  const [finalInput, setFinalInput] = useState(0);
+
   const handleClick = () => {
     setIsShown(!isShown);
+    setFinalInput(userInput);
   }
   
   return (
     <div id="app">
-      <Modal userInput={userInput} setIsShown={setIsShown} isShown={isShown} /> 
+      <Modal userInput={finalInput} setIsShown={setIsShown} isShown={isShown} /> 
       <Blur top={-27} left={-92} width={471} height={420} color={"rgba(34, 197, 94, 0.5)"} blur={400}/>
       <Blur top={631} left={1384} width={480} height={464} color={"rgba(89, 58, 177, .5)"} blur={300}/>
       <Blur top={-173} left={1452} width={544} height={550} color={"rgba(59, 130, 246, 0.5)"} blur={400}/>
@@ -38,8 +41,9 @@ const App = () => {
               type="number" 
               name="userInput" 
               id="userInput" 
-              min="-10" 
-              max="10" 
+              min="-5" 
+              max="5"
+              step="0.1" 
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
               required/>

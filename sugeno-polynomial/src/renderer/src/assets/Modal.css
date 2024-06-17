@@ -35,7 +35,7 @@ hr {
     display: grid;
     width: 100%;
     height: 100%;
-    grid-template-columns: 20% 50% 30%;
+    grid-template-columns: 25% 50% 25%;
     grid-template-rows: 1fr;
     justify-content: space-between;
     box-sizing: border-box;
@@ -91,18 +91,21 @@ hr {
 
 .results-container {
     position: relative;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 25%;
     width: 100%;
     height: 100%;
-    gap: 1rem;
+    gap: .5rem;
     justify-content: space-between;
-    padding: 2rem 0;
+    align-items: stretch;
     box-sizing: border-box;
-    border-right: 5px solid rgba(194, 194, 194, .25);
 }
 
 .results-container > div {
+    position: relative;
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: .25rem;
@@ -119,4 +122,19 @@ hr {
     color: #4ADE80;
     font-weight: bold;
     font-size: 5rem;
+}
+
+.results-container > .estimated-value-container > span {
+    color: #22d3ee;
+}
+
+.results-container > .exact-value-container > span {
+    color: #ef4444;
+}
+
+.comparison-chart {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
 }

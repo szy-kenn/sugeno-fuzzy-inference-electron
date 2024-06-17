@@ -99,6 +99,7 @@
 
 .input-box-container > input {
     position: relative;
+    width: 100%;
     text-align: center;
     background: transparent;
     border: none;

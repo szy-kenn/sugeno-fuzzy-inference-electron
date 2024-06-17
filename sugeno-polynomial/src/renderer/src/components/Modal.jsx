@@ -3,7 +3,26 @@ import "../assets/Modal.css"
 import LineChart from './LineChart'
 import BarChart from './BarChart'
 import Table from './Table'
+import { mfs, calculateExact } from '../classes/utils'
+import ScatterChart from './ScatterChart'
+
 const Modal = ({userInput, setIsShown, isShown}) => {
+
+  const z = [-135, -72, -33, -12, -3, 0, 3, 12, 33, 72, 135];
+  const data = Array.from({length: mfs.length}, (_, idx) => mfs[idx].calculate(userInput));
+  
+  let cog = 0;
+  let sum = 0;
+
+  for (let i = 0; i < data.length; i++) {
+    cog += (parseFloat(data[i]) * parseFloat(z[i]));
+    sum += parseFloat(data[i]);
+  }
+
+  cog = cog / sum;
+  cog = cog.toFixed(2);
+
+  const exactValue = calculateExact(userInput).toFixed(2);
 
   const handleClick = () => {
     setIsShown(false);
@@ -34,25 +53,28 @@ const Modal = ({userInput, setIsShown, isShown}) => {
                 <div className="estimated-value-container">
                     <p>Estimated Value</p>
                     <span>
-                        {20}
+                        {cog}
                     </span>
                 </div>
                 <div className="exact-value-container">
                     <p>Exact Value</p>
                     <span>
-                        {30}
+                        {exactValue}
                     </span>
+                </div>
+                <div className="comparison-chart">
+                    <ScatterChart estimate={{x: userInput, y: cog}} exact={{x: userInput, y: exactValue}} />
                 </div>
             </div>
             <div className="charts-container">
                 <div className="line-chart-container chart-container">
-                    <LineChart userInput={userInput} />
+                    {isShown && <LineChart userInput={userInput} />}
                 </div>
                 <div className="bar-chart-container chart-container">
-                    <BarChart />
+                    {isShown && <BarChart data={data} />}
                 </div>
             </div>
-            <Table appliedRules={[0.0, 0.1, 0.9, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]} />
+            <Table appliedRules={data} />
         </div>
 
     </div>

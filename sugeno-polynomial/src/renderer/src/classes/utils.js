@@ -5,10 +5,10 @@ export const getSlope = (p1, p2) => (p2.y - p1.y) / (p2.x - p1.x);
 export const getIntercept = (p1, p2) => p1.y - (getSlope(p1, p2) * p1.x);
 
 // creating membership functions
-export const initMembershipFunctions = () => {
+const initMembershipFunctions = () => {
   const _tmp = []  
 
-  for (let i = -5; i <= 6; i++) {
+  for (let i = -5; i <= 5; i++) {
     const mf_points = []
     for (let [x, y] of [[i - 1, 0], [i, 1], [i+1, 0]]) {
       let point = Point(x, y)
@@ -21,3 +21,7 @@ export const initMembershipFunctions = () => {
 
   return _tmp;
 };
+
+export const mfs = initMembershipFunctions();
+
+export const calculateExact = (x) => x**3 + (2 * x);

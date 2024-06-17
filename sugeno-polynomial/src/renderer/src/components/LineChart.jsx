@@ -2,29 +2,38 @@ import React, {useRef, useEffect} from 'react';
 import annotationPlugin from "chartjs-plugin-annotation";
 import { Chart as ChartJS } from 'chart.js/auto';
 import { Chart } from 'react-chartjs-2';
-import { initMembershipFunctions } from '../classes/utils';
+import { mfs } from '../classes/utils';
 
 ChartJS.register(annotationPlugin);
-ChartJS.defaults.color = "white";
+ChartJS.defaults.color = "#c2c2c2";
 ChartJS.defaults.font.family = "Courier New"; 
 ChartJS.defaults.font.size = "14px"; 
-ChartJS.defaults.elements.line.borderWidth = 1;
+ChartJS.defaults.elements.line.borderWidth = 2;
 
-const mfs = initMembershipFunctions();
-const labels = Array.from({length: 219}, (_, i) => (i-110)*0.05);
+const labels = Array.from({length: 101}, (_, i) => (i-50)*0.1);
 
 const datasets = {
   labels: labels,
-  datasets: Array.from({length: 11}, (_, i) => (
-    {
+  datasets: Array.from({length: 101}, (_, i) => {
+    if ((i-50) / 10 % 1 != 0) {
+      return {
+        data: Array(101).fill(0),
+        fill: false,
+        backgroundColor: "transparent",
+        borderColor: "transparent"
+      };
+
+  } else {
+    return {
       label: i-5,
-      data: Array.from({length: 11}, (_, d) => mfs[i].calculate(d-5)),  
+      data: Array.from({length: 101}, (_, d) => mfs[parseInt((i-50) / 10)+5].calculate((d-50)*0.1)),  
       fill: false,
-      backgroundColor: "#3B82F6",
-      borderColor: "#3B82F6"
+      backgroundColor: "#7c3aed",
+      borderColor: "#7c3aed",
     }
-  ))
-}
+  }
+  }
+)};
 
 const LineChart = ({userInput}) => {
 
@@ -36,16 +45,14 @@ const LineChart = ({userInput}) => {
     type='line' 
     data={datasets}
     options={{
-      
+      radius: 0,
       scales: {
         x: {
           min: -5,
-          max: 5,
           ticks: {
             callback: function(value, index, ticks) {
-              return parseFloat((value - 110) * 0.05).toFixed(2);
+              return (value-50)/10;
             },
-            stepSize: 1,
             maxTicksLimit: 11,
           },
         },
@@ -66,12 +73,13 @@ const LineChart = ({userInput}) => {
             {
               type: "line",
               mode: "vertical",
-              xMin: parseInt(userInput) + 5,
-              xMax: parseInt(userInput) + 5,
+              xMin: (parseFloat(userInput) * 10) + 50,
+              xMax: (parseFloat(userInput) * 10) + 50,
               yMin: 0,
               yMax: 1,
-              borderColor: "#4ade80",
-              borderWidth: 2,
+              borderColor: "white",
+              // borderColor: "#f43f5e",
+              borderWidth: 3,
               borderDash: [5, 5],
               label: {
                 enabled: true,
