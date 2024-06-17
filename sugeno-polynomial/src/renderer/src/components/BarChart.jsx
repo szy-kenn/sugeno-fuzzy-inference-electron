@@ -6,6 +6,27 @@ import { Chart } from 'react-chartjs-2';
 ChartJS.register(annotationPlugin);
 const BarChart = ({data}) => {
 
+  const annotations = []
+
+  for (let i = 0; i < data.length; i++) {
+    if (data[i] !== 0) {
+      annotations.push({
+        type: "line",
+        mode: "horizontal",
+        xMin: -1,
+        xMax: i,
+        yMin: data[i],
+        yMax: data[i],
+        borderColor: "#7c3aed",
+        borderWidth: 1,
+        label: {
+          enabled: true,
+          content: "Test"
+        },
+      })
+    }
+  }
+  
   return (
     <Chart
     type='bar' 
@@ -15,16 +36,27 @@ const BarChart = ({data}) => {
         {
           id: 1,
           data: data,
-          // backgroundColor: "#7c3aed",
-          borderWidth: 4,
+          backgroundColor: "#7c3aed",
           borderColor: "#7c3aed",
-          fill: false,
+          borderWidth: 4,
+          fill: true,
+          barThickness: "10"
+        },
+        {
+          id: 1,
+          data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          backgroundColor: "#1d2031",
+          borderColor: "#1d2031",
+          borderWidth: 4,
+          fill: true,
+          barThickness: "10"
         },
       ],
     }}
     options={{
       scales: {
         x: {
+          stacked: true,
           ticks: {
             font: {
               size: 16,
@@ -39,10 +71,12 @@ const BarChart = ({data}) => {
           min: 0,
           max: 1,
           ticks: {
-            stepSize: .1
-          },
-          grid: {
-            color: "rgba(167, 139, 250, .25)"
+            display: true,
+            autoSkip: false,
+            stepSize: 0.01,
+            callback: function(value, idx, values) {
+              return (data.includes(value.toFixed(2).toString()) ? value : "")
+            },
           },
         }
         },
@@ -54,7 +88,10 @@ const BarChart = ({data}) => {
             display: true,
             text: "Consequent (z)"
           },
-        }
+          annotation: {
+            annotations: annotations
+          }
+        },
       }
     }
     />
