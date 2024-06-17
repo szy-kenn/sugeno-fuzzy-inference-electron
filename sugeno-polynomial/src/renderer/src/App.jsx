@@ -1,6 +1,6 @@
 import Particles from "./components/Particles";
 import Blur from "./components/Blur";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 
 import "./assets/App.css"
 import Modal from "./components/Modal";
@@ -8,21 +8,35 @@ const App = () => {
 
   const [isShown, setIsShown] = useState(false);
   const [userInput, setUserInput] = useState(0);
+  const [toastContent, setToastContent] = useState("");
 
   const [finalInput, setFinalInput] = useState(0);
 
   const handleClick = () => {
+    if (userInput > 5 || userInput <= -5) {
+      setToastContent("Input must be between -5 and 5");
+      return;
+    }
+
+    setToastContent("");
     setIsShown(!isShown);
     setFinalInput(userInput);
   }
+
+  useEffect(() => {
+
+    if (userInput > 5 || userInput <= -5) {
+      setToastContent("Input must be between -5 and 5");
+    } else {
+      setToastContent("");
+    }
+    
+  }, [userInput])
+  
   
   return (
     <div id="app">
       <Modal userInput={finalInput} setIsShown={setIsShown} isShown={isShown} /> 
-      <Blur top={-27} left={-92} width={471} height={420} color={"rgba(34, 197, 94, 0.5)"} blur={400}/>
-      <Blur top={631} left={1384} width={480} height={464} color={"rgba(89, 58, 177, .5)"} blur={300}/>
-      <Blur top={-173} left={1452} width={544} height={550} color={"rgba(59, 130, 246, 0.5)"} blur={400}/>
-      <Blur top={317} left={483} width={854} height={413} color={"rgba(20, 184, 166, 0.25)"} blur={600}/>
       <Particles />
       <div className={`main-container ${isShown ? "hidden" : ""}`}>
         <div className="heading-container">
@@ -36,6 +50,9 @@ const App = () => {
 
         <div className="input-container">
           <p>Enter a number</p>
+          <div className={`toast-container ${toastContent.length === 0 ? "hidden" : ""}`}>
+            <span className="toast-span">{toastContent}</span>
+          </div>
           <div className="input-box-container">
             <input 
               type="number" 
@@ -51,6 +68,7 @@ const App = () => {
           <button 
             className="btn btn-continue"
             onClick={handleClick}
+            disabled={toastContent.length > 0 ? true : false}
             >Continue
           </button>
         </div>

@@ -68,6 +68,10 @@ const LineChart = ({userInput}) => {
         legend: {
           display: false
         },
+        title: {
+          display: true,
+          text: "Membership Functions"
+        },
         annotation: {
           annotations: [
             {

@@ -49,7 +49,11 @@ const BarChart = ({data}) => {
         plugins: {
           legend: {
             display: false
-          }
+          },
+          title: {
+            display: true,
+            text: "Consequent (z)"
+          },
         }
       }
     }
