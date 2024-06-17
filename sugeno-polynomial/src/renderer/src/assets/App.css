@@ -65,14 +65,14 @@
     width: 50%;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: .5rem;
 }
 
 .input-container > p {
     color: #4ADE80;
     font-family: 'Courier New', Courier, monospace;
     font-weight: bold;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
 }
 
 .input-box-container {
@@ -84,6 +84,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.5s ease;
+}
+
+.input-box-container.invalid {
+    border: 2px solid #ef4444;
+}
+
+.input-box-container.invalid > input {
+    opacity: .25;
 }
 
 .input-box-container > input::-webkit-outer-spin-button,
@@ -136,10 +145,11 @@
 }
 
 .btn-continue:disabled {
-    opacity: .5;
+    opacity: .25;
     user-select: none;
     pointer-events: none;
     cursor:not-allowed;
+    background: rgb(148, 148, 148);
 }
 
 .btn-continue:hover {
@@ -154,16 +164,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1.25rem;
+    padding: .75rem;
     border: 2px solid #ef4444;
     border-radius: .25rem;
     background: rgba(239, 68, 68, .35);
     color: white;
     opacity: 1;
-    transition: opacity 0.25s ease;
+    transition: all 0.5s ease;
+    font-size: .925rem;
+    transform: translateY(0);
 }
 
 .toast-container.hidden {
-    display: none;
+    /* display: none; */
     opacity: 0;
+    transform: translateY(20px);
 }

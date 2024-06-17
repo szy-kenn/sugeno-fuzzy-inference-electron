@@ -15,10 +15,10 @@ const BarChart = ({data}) => {
         {
           id: 1,
           data: data,
-          backgroundColor: "#7c3aed",
+          // backgroundColor: "#7c3aed",
           borderWidth: 4,
-          borderColor: "#5b21b6",
-          fill: true,
+          borderColor: "#7c3aed",
+          fill: false,
         },
       ],
     }}

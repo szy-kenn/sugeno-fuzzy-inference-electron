@@ -53,7 +53,7 @@ const App = () => {
           <div className={`toast-container ${toastContent.length === 0 ? "hidden" : ""}`}>
             <span className="toast-span">{toastContent}</span>
           </div>
-          <div className="input-box-container">
+          <div className={`input-box-container ${toastContent.length > 0 ? "invalid" : ""}`}>
             <input 
               type="number" 
               name="userInput" 
