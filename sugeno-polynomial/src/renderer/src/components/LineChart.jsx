@@ -10,28 +10,18 @@ ChartJS.defaults.font.family = "Courier New";
 ChartJS.defaults.font.size = "14px"; 
 ChartJS.defaults.elements.line.borderWidth = 2;
 
-const labels = Array.from({length: 101}, (_, i) => (i-50)*0.1);
-
+const labels = Array.from({length: 202}, (_, i) => (i-101)*0.25);
+// const labels = Array.from({length: 51}, (_, i) => (i - 25)) 
 const datasets = {
   labels: labels,
-  datasets: Array.from({length: 101}, (_, i) => {
-    if ((i-50) / 10 % 1 != 0) {
-      return {
-        data: Array(101).fill(0),
-        fill: false,
-        backgroundColor: "transparent",
-        borderColor: "transparent"
-      };
-
-  } else {
+  datasets: Array.from({length: 202}, (_, i) => {
     return {
-      label: i-5,
-      data: Array.from({length: 101}, (_, d) => mfs[parseInt((i-50) / 10)+5].calculate((d-50)*0.1)),  
+      label: (i - 101) * 0.25,
+      data: Array.from({length: 202}, (_, d) => mfs[i].calculate((d-101)*0.25)),  
       fill: false,
       backgroundColor: "#7c3aed",
       borderColor: "#7c3aed",
     }
-  }
   }
 )};
 
@@ -48,12 +38,15 @@ const LineChart = ({userInput}) => {
       radius: 0,
       scales: {
         x: {
-          min: -5,
+          // min: -25,
+          // max: 25,
           ticks: {
-            callback: function(value, index, ticks) {
-              return (value-50)/10;
-            },
-            maxTicksLimit: 11,
+            minRotation: 90,
+            maxRotation: 90,
+            // stepSize: 1,
+            // callback: function(value, index, ticks) {
+            //   return (value - 101) * 0.25;
+            // },
           },
         },
         y: {
@@ -77,8 +70,8 @@ const LineChart = ({userInput}) => {
             {
               type: "line",
               mode: "vertical",
-              xMin: (parseFloat(userInput) * 10) + 50,
-              xMax: (parseFloat(userInput) * 10) + 50,
+              xMin: (parseInt(userInput) * 4 + 101),
+              xMax: (parseInt(userInput) * 4 + 101),
               yMin: 0,
               yMax: 1,
               borderColor: "white",

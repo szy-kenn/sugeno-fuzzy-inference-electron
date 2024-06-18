@@ -11,8 +11,8 @@ const App = () => {
   const [finalInput, setFinalInput] = useState(0);
 
   const handleClick = () => {
-    if (userInput > 5 || userInput <= -5) {
-      setToastContent("Input must be between -5 and 5");
+    if (userInput > 25 || userInput <= -25) {
+      setToastContent("Input must be between -25 and 25");
       return;
     }
 
@@ -23,8 +23,8 @@ const App = () => {
 
   useEffect(() => {
 
-    if (userInput > 5 || userInput <= -5) {
-      setToastContent("Input must be between -5 and 5");
+    if (userInput > 25 || userInput <= -25) {
+      setToastContent("Input must be between -25 and 25");
     } else {
       setToastContent("");
     }
@@ -60,9 +60,9 @@ const App = () => {
               type="number" 
               name="userInput" 
               id="userInput" 
-              min="-5" 
-              max="5"
-              step="0.1" 
+              min="-25" 
+              max="25"
+              step="0.25" 
               value={userInput}
               onChange={(e) => setUserInput(e.target.value)}
               required/>

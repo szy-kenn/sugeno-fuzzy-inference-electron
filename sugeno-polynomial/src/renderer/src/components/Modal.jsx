@@ -4,7 +4,7 @@ import LineChart from './LineChart'
 import BarChart from './BarChart'
 import Table from './Table'
 import ScatterChart from './ScatterChart'
-import { mfs, calculateExact, calculateWeightedAverage } from '../classes/utils'
+import { mfs, calculateExact, calculateWeightedAverage, z } from '../classes/utils'
 
 const Modal = ({userInput, setIsShown, isShown}) => {
 
@@ -72,7 +72,7 @@ const Modal = ({userInput, setIsShown, isShown}) => {
                     {isShown && <LineChart userInput={userInput} />}
                 </div>
                 <div className="bar-chart-container chart-container">
-                    {isShown && <BarChart data={data} />}
+                    {isShown && <BarChart data={data} labels={z} />}
                 </div>
             </div>
             <Table appliedRules={data} />

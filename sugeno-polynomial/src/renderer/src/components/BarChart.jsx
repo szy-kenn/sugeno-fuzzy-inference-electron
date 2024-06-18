@@ -4,7 +4,7 @@ import { Chart as ChartJS } from 'chart.js/auto';
 import { Chart } from 'react-chartjs-2';
 
 ChartJS.register(annotationPlugin);
-const BarChart = ({data}) => {
+const BarChart = ({data, labels}) => {
 
   const annotations = []
 
@@ -31,7 +31,8 @@ const BarChart = ({data}) => {
     <Chart
     type='bar' 
     data={{
-      labels: ['(-135)', '(-72)', '(-33)', '(-12)', '(-3)', '(0)', '(3)', '(12)', '(33)', '(72)', '(135)'],
+      labels: labels,
+      // labels: ['(-135)', '(-72)', '(-33)', '(-12)', '(-3)', '(0)', '(3)', '(12)', '(33)', '(72)', '(135)'],
       datasets: [
         {
           id: 1,
@@ -39,17 +40,17 @@ const BarChart = ({data}) => {
           backgroundColor: "#7c3aed",
           borderColor: "#7c3aed",
           borderWidth: 4,
-          fill: true,
-          barThickness: "10"
+          // fill: true,
+          barThickness: "2.5"
         },
         {
           id: 1,
-          data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          data: Array(labels.length).fill(1),
           backgroundColor: "#1d2031",
           borderColor: "#1d2031",
           borderWidth: 4,
-          fill: true,
-          barThickness: "10"
+          // fill: true,
+          barThickness: "2.5"
         },
       ],
     }}
@@ -58,10 +59,17 @@ const BarChart = ({data}) => {
         x: {
           stacked: true,
           ticks: {
+            maxRotation: 45,
+            minRotation: 45,
             font: {
-              size: 16,
-              weight: "bold"
-            }
+              size: 9,
+            },
+            callback: function(value, idx, values) {
+              if (parseFloat(data[idx])) {
+                return value;
+              }
+              // return ((parseFloat(data[idx]) !== 0) ? value : "")
+            },
           },
           grid: {
             color: "transparent"
