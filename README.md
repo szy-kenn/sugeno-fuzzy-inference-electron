@@ -22,5 +22,4 @@
 
 ## Screenshots
 
-![Screenshot](./img/sample.png)
 ![Screenshot #2](./img/sample-2.png)
