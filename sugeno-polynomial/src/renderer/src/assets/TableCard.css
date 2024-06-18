@@ -1,7 +1,7 @@
 .table-card {
     position: relative;
     width: 100%;
-    /* height: 100%; */
+    height: 100%;
     display: flex;
     font-size: 1rem;
     align-items: center;

@@ -1,28 +1,29 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import "../assets/Modal.css"
 import LineChart from './LineChart'
 import BarChart from './BarChart'
 import Table from './Table'
-import { mfs, calculateExact } from '../classes/utils'
 import ScatterChart from './ScatterChart'
+import { mfs, calculateExact, calculateWeightedAverage } from '../classes/utils'
 
 const Modal = ({userInput, setIsShown, isShown}) => {
 
-  const z = [-135, -72, -33, -12, -3, 0, 3, 12, 33, 72, 135];
-  const data = Array.from({length: mfs.length}, (_, idx) => mfs[idx].calculate(userInput));
-  
-  let cog = 0;
-  let sum = 0;
+    const [data, setData] = useState([]);
+    const [WA, setWA] = useState(0.0);
+    const [exactValue, setExactValue] = useState(0.0);
 
-  for (let i = 0; i < data.length; i++) {
-    cog += (parseFloat(data[i]) * parseFloat(z[i]));
-    sum += parseFloat(data[i]);
-  }
+    useEffect(() => {
+        // after clicking 'Continue', 
+        // calculate the fuzzified values, the weighted average, and the exact value
+        const _tmpData = Array.from({length: mfs.length}, (_, idx) => mfs[idx].calculate(userInput));
+        const _WA = calculateWeightedAverage(_tmpData);
+        const _exactValue = calculateExact(userInput).toFixed(2);
 
-  cog = cog / sum;
-  cog = cog.toFixed(2);
+        setData(_tmpData);
+        setWA(_WA);
+        setExactValue(_exactValue);
 
-  const exactValue = calculateExact(userInput).toFixed(2);
+    }, [userInput])
 
   const handleClick = () => {
     setIsShown(false);
@@ -53,7 +54,7 @@ const Modal = ({userInput, setIsShown, isShown}) => {
                 <div className="estimated-value-container">
                     <p>Estimated Value</p>
                     <span>
-                        {cog}
+                        {WA}
                     </span>
                 </div>
                 <div className="exact-value-container">
@@ -63,7 +64,7 @@ const Modal = ({userInput, setIsShown, isShown}) => {
                     </span>
                 </div>
                 <div className="comparison-chart">
-                    <ScatterChart estimate={{x: userInput, y: cog}} exact={{x: userInput, y: exactValue}} />
+                    <ScatterChart estimate={{x: userInput, y: WA}} exact={{x: userInput, y: exactValue}} />
                 </div>
             </div>
             <div className="charts-container">

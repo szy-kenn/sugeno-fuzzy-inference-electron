@@ -1,15 +1,13 @@
-import Particles from "./components/Particles";
-import Blur from "./components/Blur";
 import {useState, useEffect} from "react";
-
-import "./assets/App.css"
+import Particles from "./components/Particles";
 import Modal from "./components/Modal";
+import "./assets/App.css"
+
 const App = () => {
 
   const [isShown, setIsShown] = useState(false);
   const [userInput, setUserInput] = useState(0);
   const [toastContent, setToastContent] = useState("");
-
   const [finalInput, setFinalInput] = useState(0);
 
   const handleClick = () => {
@@ -36,7 +34,11 @@ const App = () => {
   
   return (
     <div id="app">
-      <Modal userInput={finalInput} setIsShown={setIsShown} isShown={isShown} /> 
+      <Modal 
+        userInput={finalInput} 
+        setIsShown={setIsShown} 
+        isShown={isShown}
+      /> 
       <Particles />
       <div className={`main-container ${isShown ? "hidden" : ""}`}>
         <div className="heading-container">

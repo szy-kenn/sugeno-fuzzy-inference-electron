@@ -24,4 +24,18 @@ const initMembershipFunctions = () => {
 
 export const mfs = initMembershipFunctions();
 
+const z = [-135, -72, -33, -12, -3, 0, 3, 12, 33, 72, 135];
+
 export const calculateExact = (x) => x**3 + (2 * x);
+
+export const calculateWeightedAverage = (data) => {
+  let WA = 0;
+  let sum = 0;
+
+  for (let i = 0; i < data.length; i++) {
+    WA += (parseFloat(data[i]) * parseFloat(z[i]));
+    sum += parseFloat(data[i]);
+  };
+  WA = WA / sum;
+  return WA.toFixed(2);
+}
